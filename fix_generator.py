@@ -1,4 +1,6 @@
-# generator.py
+﻿import os
+
+code = """# generator.py
 # All Groq API calls live here.
 import os, sys
 from groq import Groq
@@ -27,7 +29,7 @@ def call_groq(system_prompt: str, user_message: str, max_tokens: int = 1000) -> 
         return response.choices[0].message.content
     except Exception as e:
         import traceback
-        error_msg = f"Groq API Error: {str(e)}\n{traceback.format_exc()}"
+        error_msg = f"Groq API Error: {str(e)}\\n{traceback.format_exc()}"
         print(error_msg)
         raise Exception(error_msg)
 
@@ -41,7 +43,7 @@ Impact Score: {article.get("impact_score", "N/A")}
 Content: {article.get("content", "")}
 '''
         formatted.append(block)
-    return "\n---\n".join(formatted)
+    return "\\n---\\n".join(formatted)
 
 def generate_newsletter(articles: list[dict]) -> str:
     system_prompt = get_system_prompt("newsletter")
@@ -57,19 +59,19 @@ and use the remaining relevant ones as sub-issues. Use the URLs exactly as provi
 
 def generate_linkedin(text: str) -> str:
     system_prompt = get_system_prompt("linkedin")
-    return call_groq(system_prompt, f"Generate a LinkedIn post from this content:\n\n{text}", max_tokens=400)
+    return call_groq(system_prompt, f"Generate a LinkedIn post from this content:\\n\\n{text}", max_tokens=400)
 
 def generate_twitter(text: str) -> str:
     system_prompt = get_system_prompt("twitter")
-    return call_groq(system_prompt, f"Generate a Twitter/X thread from this content:\n\n{text}", max_tokens=600)
+    return call_groq(system_prompt, f"Generate a Twitter/X thread from this content:\\n\\n{text}", max_tokens=600)
 
 def generate_tiktok(text: str, tiktok_type: str = "informative") -> str:
     system_prompt = get_system_prompt("tiktok")
-    return call_groq(system_prompt, f"TikTok type: {tiktok_type}\n\nContent:\n{text}", max_tokens=600)
+    return call_groq(system_prompt, f"TikTok type: {tiktok_type}\\n\\nContent:\\n{text}", max_tokens=600)
 
 def run_brand_check(content: str, format_type: str) -> dict:
     system_prompt = get_system_prompt("brand_check")
-    result = call_groq(system_prompt, f"Format type: {format_type}\n\nContent:\n{content}", max_tokens=400)
+    result = call_groq(system_prompt, f"Format type: {format_type}\\n\\nContent:\\n{content}", max_tokens=400)
     return {"brand_check_result": result}
 
 def generate_all_formats(text: str, tiktok_type: str = "informative") -> dict:
@@ -79,3 +81,9 @@ def generate_all_formats(text: str, tiktok_type: str = "informative") -> dict:
         "tiktok": generate_tiktok(text, tiktok_type),
         "newsletter": generate_newsletter([{"headline": "User provided content", "url": "", "content": text, "impact_score": None}])
     }
+"""
+
+filepath = "generator.py"
+with open(filepath, 'w') as f:
+    f.write(code)
+print("✓ generator.py fixed successfully!")
