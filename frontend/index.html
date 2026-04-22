@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALN Content Generator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="page-wrapper">
+        <!-- SIDEBAR/HEADER -->
+        <header class="header">
+            <div class="header-content">
+                <h1>ALN Content Generator</h1>
+                <p>Generate script for any social media in one click!</p>
+            </div>
+        </header>
+
+        <!-- MAIN CHAT-LIKE INTERFACE -->
+        <main class="chat-container">
+            <!-- INPUT SECTION -->
+            <section class="input-wrapper">
+                <!-- INPUT TABS -->
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="text">Paste Text</button>
+                    <button class="tab-btn" data-tab="url">Enter URL</button>
+                    <button class="tab-btn" data-tab="pdf">Upload PDF</button>
+                </div>
+
+                <!-- TAB 1: PASTE TEXT -->
+                <div class="tab-content active" id="text-tab">
+                    <textarea 
+                        id="text-input" 
+                        class="prompt-input"
+                        placeholder="Enter your prompt here..."
+                    ></textarea>
+                </div>
+
+                <!-- TAB 2: ENTER URL -->
+                <div class="tab-content" id="url-tab">
+                    <input 
+                        type="url" 
+                        id="url-input" 
+                        class="prompt-input url-input"
+                        placeholder="https://example.com/article"
+                    >
+                </div>
+
+                <!-- TAB 3: UPLOAD PDF -->
+                <div class="tab-content" id="pdf-tab">
+                    <div class="file-upload-wrapper">
+                        <input type="file" id="pdf-input" accept=".pdf">
+                        <label for="pdf-input" class="file-upload-label">📄 Click to upload PDF</label>
+                    </div>
+                </div>
+
+                <!-- OPTIONS ROW -->
+                <div class="options-row">
+                    <div class="format-selector">
+                        <label class="section-label">Output Formats</label>
+                        <div class="format-checkboxes">
+                            <label class="format-check">
+                                <input type="checkbox" name="format" value="linkedin" checked>
+                                <span>LinkedIn</span>
+                            </label>
+                            <label class="format-check">
+                                <input type="checkbox" name="format" value="twitter">
+                                <span>Twitter/X</span>
+                            </label>
+                            <label class="format-check">
+                                <input type="checkbox" name="format" value="tiktok">
+                                <span>TikTok</span>
+                            </label>
+                            <label class="format-check">
+                                <input type="checkbox" name="format" value="newsletter">
+                                <span>Newsletter</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="side-options">
+                        <div class="tiktok-options">
+                            <label class="section-label">TikTok Type</label>
+                            <select id="tiktok-type" class="select-input">
+                                <option value="informative">Informative</option>
+                                <option value="event">Event</option>
+                                <option value="hiring">Hiring</option>
+                                <option value="culture">Culture</option>
+                                <option value="fun">Fun</option>
+                            </select>
+                        </div>
+                        <label class="brand-check-label">
+                            <input type="checkbox" id="brand-check-toggle">
+                            <span>Brand Tone Check</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- GENERATE BUTTON -->
+                <button id="generate-btn" class="btn-generate">Generate Content</button>
+            </section>
+
+            <!-- OUTPUT SECTION -->
+            <section class="output-section" id="output-section">
+                <div class="output-placeholder">
+                    <p>Your generated content will appear here</p>
+                </div>
+            </section>
+
+            <!-- HISTORY SECTION -->
+            <section class="history-section">
+                <h3 class="history-title">History</h3>
+                <div class="history-list" id="history-list">
+                    <p class="history-empty">No generations yet</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>
