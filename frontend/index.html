@@ -7,17 +7,26 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="page-wrapper">
-        <!-- SIDEBAR/HEADER -->
-        <header class="header">
-            <div class="header-content">
-                <h1>ALN Content Generator</h1>
-                <p>Generate script for any social media in one click!</p>
-            </div>
-        </header>
+    <!-- HEADER -->
+    <header class="header">
+        <div class="header-content">
+            <h1>ALN Content Generator</h1>
+            <p>Generate script for any social media in one click!</p>
+        </div>
+    </header>
 
-        <!-- MAIN CHAT-LIKE INTERFACE -->
-        <main class="chat-container">
+    <!-- MAIN LAYOUT WITH SIDEBAR -->
+    <div class="main-layout">
+        <!-- LEFT SIDEBAR - HISTORY -->
+        <aside class="sidebar">
+            <h3 class="history-title">History</h3>
+            <div class="history-list" id="history-list">
+                <p class="history-empty">No generations yet</p>
+            </div>
+        </aside>
+
+        <!-- RIGHT CONTENT AREA -->
+        <main class="content-area">
             <!-- INPUT SECTION -->
             <section class="input-wrapper">
                 <!-- INPUT TABS -->
@@ -50,7 +59,11 @@
                 <div class="tab-content" id="pdf-tab">
                     <div class="file-upload-wrapper">
                         <input type="file" id="pdf-input" accept=".pdf">
-                        <label for="pdf-input" class="file-upload-label">📄 Click to upload PDF</label>
+                        <label for="pdf-input" class="file-upload-label" id="pdf-label">📄 Click to upload PDF</label>
+                        <div class="pdf-file-display" id="pdf-file-display" style="display: none;">
+                            <span class="pdf-filename" id="pdf-filename"></span>
+                            <button type="button" class="pdf-remove-btn" id="pdf-remove-btn" title="Remove PDF">×</button>
+                        </div>
                     </div>
                 </div>
 
@@ -89,29 +102,20 @@
                                 <option value="fun">Fun</option>
                             </select>
                         </div>
-                        <label class="brand-check-label">
-                            <input type="checkbox" id="brand-check-toggle">
-                            <span>Brand Tone Check</span>
-                        </label>
                     </div>
                 </div>
 
-                <!-- GENERATE BUTTON -->
-                <button id="generate-btn" class="btn-generate">Generate Content</button>
-            </section>
-
-            <!-- OUTPUT SECTION -->
-            <section class="output-section" id="output-section">
-                <div class="output-placeholder">
-                    <p>Your generated content will appear here</p>
+                <!-- GENERATE BUTTONS -->
+                <div class="button-group">
+                    <button id="generate-all-btn" class="btn-generate btn-all">All</button>
+                    <button id="generate-btn" class="btn-generate">Generate Content</button>
                 </div>
             </section>
 
-            <!-- HISTORY SECTION -->
-            <section class="history-section">
-                <h3 class="history-title">History</h3>
-                <div class="history-list" id="history-list">
-                    <p class="history-empty">No generations yet</p>
+            <!-- OUTPUT SECTION - SINGLE BOX -->
+            <section class="output-section" id="output-section">
+                <div class="output-placeholder">
+                    <p>Your generated content will appear here</p>
                 </div>
             </section>
         </main>

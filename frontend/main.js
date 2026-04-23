@@ -27,6 +27,30 @@ document.querySelectorAll(".tab-btn").forEach(btn => {
     });
 });
 
+// --- PDF UPLOAD HANDLING ---
+const pdfInput = document.getElementById("pdf-input");
+const pdfLabel = document.getElementById("pdf-label");
+const pdfFileDisplay = document.getElementById("pdf-file-display");
+const pdfFilename = document.getElementById("pdf-filename");
+const pdfRemoveBtn = document.getElementById("pdf-remove-btn");
+
+pdfInput.addEventListener("change", (e) => {
+    if (pdfInput.files.length > 0) {
+        const filename = pdfInput.files[0].name;
+        pdfFilename.textContent = filename;
+        pdfLabel.style.display = "none";
+        pdfFileDisplay.style.display = "flex";
+    }
+});
+
+pdfRemoveBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    pdfInput.value = "";
+    pdfLabel.style.display = "flex";
+    pdfFileDisplay.style.display = "none";
+    pdfFilename.textContent = "";
+});
+
 // --- COPY TO CLIPBOARD ---
 // Attach this to every Copy button in the output cards
 async function copyToClipboard(text, buttonElement) {
@@ -42,12 +66,22 @@ async function copyToClipboard(text, buttonElement) {
 // --- GENERATE CONTENT ---
 // Called when the user clicks the Generate button
 document.getElementById("generate-btn").addEventListener("click", generateContent);
+document.getElementById("generate-all-btn").addEventListener("click", generateAllContent);
+
+async function generateAllContent() {
+    // Check all format checkboxes
+    document.querySelectorAll('input[name="format"]').forEach(checkbox => {
+        checkbox.checked = true;
+    });
+    // Then generate
+    await generateContent();
+}
 
 async function generateContent() {
     const activeTab = document.querySelector(".tab-btn.active").dataset.tab;
     const selectedFormats = getSelectedFormats();
     const tiktokType = document.getElementById("tiktok-type")?.value || "informative";
-    const runBrandCheck = document.getElementById("brand-check-toggle").checked;
+    const runBrandCheck = true; // Always run brand check now
 
     if (selectedFormats.length === 0) {
         return showError("Please select at least one format.");
@@ -120,6 +154,7 @@ async function generateContent() {
                 formData.append("file", fileInput.files[0]);
                 formData.append("format_type", format);
                 formData.append("tiktok_type", tiktokType);
+                formData.append("run_brand_check", runBrandCheck);
 
                 response = await fetch(`${API_BASE}/generate/pdf`, {
                     method: "POST",
@@ -147,7 +182,10 @@ async function generateContent() {
 // Renders all output cards from the API response
 function displayOutputs(data) {
     const outputSection = document.getElementById("output-section");
-    outputSection.innerHTML = "";
+    // Only clear on the first response (when output section is showing placeholder)
+    if (outputSection.querySelector(".output-placeholder")) {
+        outputSection.innerHTML = "";
+    }
 
     const formatLabels = {
         newsletter: "Governance Weekly Newsletter",
@@ -228,7 +266,7 @@ function renderHistory(items) {
         const preview = item.output_text.substring(0, 100) + (item.output_text.length > 100 ? "..." : "");
         
         return `
-            <div class="history-item">
+            <div class="history-item" onclick="viewHistoryItem('${escapeHtml(item.output_text)}', '${item.format_type}')">
                 <div class="history-item-info">
                     <div class="history-item-date">${date}</div>
                     <span class="history-item-format">${item.format_type.toUpperCase()}</span>
@@ -251,11 +289,54 @@ async function deleteHistoryItem(id, event) {
     }
 }
 
+// Views a history item - displays its content in the output section
+function viewHistoryItem(content, formatType) {
+    const outputSection = document.getElementById("output-section");
+    outputSection.innerHTML = "";
+
+    const formatLabels = {
+        newsletter: "Governance Weekly Newsletter",
+        linkedin: "LinkedIn Post",
+        twitter: "Twitter / X Thread",
+        tiktok: "TikTok Script",
+        brand_check: "Brand Tone Check"
+    };
+
+    const card = document.createElement("div");
+    card.className = "output-card";
+
+    const copyBtn = document.createElement("button");
+    copyBtn.className = "copy-btn";
+    copyBtn.textContent = "Copy";
+
+    card.innerHTML = `
+        <div class="card-header">
+            <h3>${formatLabels[formatType] || formatType}</h3>
+        </div>
+        <pre class="output-text">${escapeHtml(content)}</pre>
+    `;
+
+    card.querySelector(".card-header").appendChild(copyBtn);
+    copyBtn.addEventListener("click", () => {
+        copyToClipboard(content, copyBtn);
+    });
+
+    outputSection.appendChild(card);
+}
+
 // Show/hide loading spinner on the generate button
 function setLoading(isLoading) {
     const btn = document.getElementById("generate-btn");
+    const allBtn = document.getElementById("generate-all-btn");
     btn.disabled = isLoading;
-    btn.textContent = isLoading ? "Generating..." : "Generate";
+    allBtn.disabled = isLoading;
+    if (isLoading) {
+        btn.textContent = "Generating...";
+        allBtn.textContent = "Generating...";
+    } else {
+        btn.textContent = "Generate Content";
+        allBtn.textContent = "All";
+    }
 }
 
 function clearOutputs() {
@@ -273,10 +354,8 @@ function getSelectedFormats() {
 }
 
 // --- HISTORY TOGGLE ---
-document.querySelector(".history-section h3").addEventListener("click", () => {
-    const list = document.getElementById("history-list");
-    list.style.display = list.style.display === "none" ? "" : "none";
-});
+// History is now in the sidebar, no toggle needed
+// Just load history on page load
 
 // Load history when page first opens
 window.addEventListener("load", loadHistory);
