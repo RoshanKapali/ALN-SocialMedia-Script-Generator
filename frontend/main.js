@@ -169,9 +169,6 @@ async function generateContent() {
             }
         }
 
-        // Reload history section
-        loadHistory();
-
     } catch (err) {
         showError(err.message);
     } finally {
@@ -242,87 +239,16 @@ function escapeHtml(text) {
 }
 
 // Loads and displays history from the backend
-async function loadHistory() {
-    try {
-        const response = await fetch(`${API_BASE}/history?limit=20`);
-        const data = await response.json();
-        renderHistory(data.history);
-    } catch (err) {
-        console.error("Failed to load history:", err);
-    }
-}
+// REMOVED - History feature has been removed
 
 // Renders the history list
-function renderHistory(items) {
-    const historyList = document.getElementById("history-list");
-    
-    if (!items || items.length === 0) {
-        historyList.innerHTML = '<p class="history-empty">No generations yet</p>';
-        return;
-    }
-
-    historyList.innerHTML = items.map(item => {
-        const date = new Date(item.created_at).toLocaleString();
-        const preview = item.output_text.substring(0, 100) + (item.output_text.length > 100 ? "..." : "");
-        
-        return `
-            <div class="history-item" onclick="viewHistoryItem('${escapeHtml(item.output_text)}', '${item.format_type}')">
-                <div class="history-item-info">
-                    <div class="history-item-date">${date}</div>
-                    <span class="history-item-format">${item.format_type.toUpperCase()}</span>
-                    <div class="history-item-preview">${escapeHtml(preview)}</div>
-                </div>
-                <button class="delete-btn" onclick="deleteHistoryItem(${item.id}, event)">Delete</button>
-            </div>
-        `;
-    }).join("");
-}
+// REMOVED - History feature has been removed
 
 // Deletes a history item
-async function deleteHistoryItem(id, event) {
-    event.preventDefault();
-    try {
-        await fetch(`${API_BASE}/history/${id}`, {method: "DELETE"});
-        loadHistory();
-    } catch (err) {
-        alert("Failed to delete history item");
-    }
-}
+// REMOVED - History feature has been removed
 
 // Views a history item - displays its content in the output section
-function viewHistoryItem(content, formatType) {
-    const outputSection = document.getElementById("output-section");
-    outputSection.innerHTML = "";
-
-    const formatLabels = {
-        newsletter: "Governance Weekly Newsletter",
-        linkedin: "LinkedIn Post",
-        twitter: "Twitter / X Thread",
-        tiktok: "TikTok Script",
-        brand_check: "Brand Tone Check"
-    };
-
-    const card = document.createElement("div");
-    card.className = "output-card";
-
-    const copyBtn = document.createElement("button");
-    copyBtn.className = "copy-btn";
-    copyBtn.textContent = "Copy";
-
-    card.innerHTML = `
-        <div class="card-header">
-            <h3>${formatLabels[formatType] || formatType}</h3>
-        </div>
-        <pre class="output-text">${escapeHtml(content)}</pre>
-    `;
-
-    card.querySelector(".card-header").appendChild(copyBtn);
-    copyBtn.addEventListener("click", () => {
-        copyToClipboard(content, copyBtn);
-    });
-
-    outputSection.appendChild(card);
-}
+// REMOVED - History feature has been removed
 
 // Show/hide loading spinner on the generate button
 function setLoading(isLoading) {
@@ -352,10 +278,3 @@ function getSelectedFormats() {
     const checkboxes = document.querySelectorAll('input[name="format"]:checked');
     return Array.from(checkboxes).map(cb => cb.value);
 }
-
-// --- HISTORY TOGGLE ---
-// History is now in the sidebar, no toggle needed
-// Just load history on page load
-
-// Load history when page first opens
-window.addEventListener("load", loadHistory);
