@@ -59,9 +59,9 @@ def generate_linkedin(text: str) -> str:
     system_prompt = get_system_prompt("linkedin")
     return call_groq(system_prompt, f"Generate a LinkedIn post from this content:\n\n{text}", max_tokens=400)
 
-def generate_twitter(text: str) -> str:
-    system_prompt = get_system_prompt("twitter")
-    return call_groq(system_prompt, f"Generate a Twitter/X thread from this content:\n\n{text}", max_tokens=600)
+def generate_meta(text: str, meta_type: str = "general") -> str:
+    system_prompt = get_system_prompt("meta")
+    return call_groq(system_prompt, f"Meta post type: {meta_type}\n\nContent:\n{text}", max_tokens=600)
 
 def generate_tiktok(text: str, tiktok_type: str = "informative") -> str:
     system_prompt = get_system_prompt("tiktok")
@@ -72,10 +72,10 @@ def run_brand_check(content: str, format_type: str) -> dict:
     result = call_groq(system_prompt, f"Format type: {format_type}\n\nContent:\n{content}", max_tokens=400)
     return {"brand_check_result": result}
 
-def generate_all_formats(text: str, tiktok_type: str = "informative") -> dict:
+def generate_all_formats(text: str, tiktok_type: str = "informative", meta_type: str = "general") -> dict:
     return {
         "linkedin": generate_linkedin(text),
-        "twitter": generate_twitter(text),
+        "meta": generate_meta(text, meta_type),
         "tiktok": generate_tiktok(text, tiktok_type),
         "newsletter": generate_newsletter([{"headline": "User provided content", "url": "", "content": text, "impact_score": None}])
     }

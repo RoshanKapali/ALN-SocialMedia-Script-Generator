@@ -81,6 +81,7 @@ async function generateContent() {
     const activeTab = document.querySelector(".tab-btn.active").dataset.tab;
     const selectedFormats = getSelectedFormats();
     const tiktokType = document.getElementById("tiktok-type")?.value || "informative";
+    const metaType = document.getElementById("meta-type")?.value || "general";
     const runBrandCheck = true; // Always run brand check now
 
     if (selectedFormats.length === 0) {
@@ -95,6 +96,7 @@ async function generateContent() {
         let response;
         let basePayload = {
             tiktok_type: tiktokType,
+            meta_type: metaType,
             run_brand_check: runBrandCheck
         };
 
@@ -154,6 +156,7 @@ async function generateContent() {
                 formData.append("file", fileInput.files[0]);
                 formData.append("format_type", format);
                 formData.append("tiktok_type", tiktokType);
+                formData.append("meta_type", metaType);
                 formData.append("run_brand_check", runBrandCheck);
 
                 response = await fetch(`${API_BASE}/generate/pdf`, {
@@ -187,7 +190,7 @@ function displayOutputs(data) {
     const formatLabels = {
         newsletter: "Governance Weekly Newsletter",
         linkedin: "LinkedIn Post",
-        twitter: "Twitter / X Thread",
+        meta: "Meta Post",
         tiktok: "TikTok Script",
         brand_check: "Brand Tone Check"
     };
