@@ -20,7 +20,6 @@ A powerful content generation tool that automatically creates social media scrip
 - **Groq API (Llama 3.3 70B Versatile)** - High-performance AI-powered content generation
 - **BeautifulSoup4** - Web scraping
 - **PDFPlumber** - PDF text extraction
-- **SQLite** - Local history database
 
 ### Frontend
 - **HTML5** - Semantic markup
@@ -35,7 +34,6 @@ ALN-SocialMedia-Script-Generator/
 │   ├── main.py              # FastAPI application & routes
 │   ├── generator.py         # Gemini API integration & content generation
 │   ├── scraper.py           # Web scraping & content extraction
-│   ├── database.py          # SQLite database operations
 │   ├── requirements.txt      # Python dependencies
 │   └── __init__.py
 ├── frontend/

@@ -1,10 +1,10 @@
 // main.js
 // -------
 // All frontend logic lives here.
-// Communicates with the FastAPI backend at http://localhost:8000
+// Communicates with the FastAPI backend at Render deployment
 // Uses fetch() — no external libraries needed.
 
-const API_BASE = "http://localhost:8000";
+const API_URL = "https://aln-socialmedia-script-generator.onrender.com";
 
 // --- TAB SWITCHING ---
 document.querySelectorAll(".tab-btn").forEach(btn => {
@@ -106,7 +106,7 @@ async function generateContent() {
 
             // Generate for each selected format
             for (const format of selectedFormats) {
-                response = await fetch(`${API_BASE}/generate/text`, {
+                response = await fetch(`${API_URL}/generate/text`, {
                     method: "POST",
                     headers: {"Content-Type": "application/json"},
                     body: JSON.stringify({
@@ -129,7 +129,7 @@ async function generateContent() {
 
             // Generate for each selected format
             for (const format of selectedFormats) {
-                response = await fetch(`${API_BASE}/generate/url`, {
+                response = await fetch(`${API_URL}/generate/url`, {
                     method: "POST",
                     headers: {"Content-Type": "application/json"},
                     body: JSON.stringify({
@@ -159,7 +159,7 @@ async function generateContent() {
                 formData.append("meta_type", metaType);
                 formData.append("run_brand_check", runBrandCheck);
 
-                response = await fetch(`${API_BASE}/generate/pdf`, {
+                response = await fetch(`${API_URL}/generate/pdf`, {
                     method: "POST",
                     body: formData
                 });
