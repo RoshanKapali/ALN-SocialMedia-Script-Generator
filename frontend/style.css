@@ -43,7 +43,7 @@ body {
 /* ============= PAGE WRAPPER ============= */
 .header {
     width: 100%;
-    background: linear-gradient(135deg, var(--secondary-bg) 0%, var(--tertiary-bg) 100%);
+    background: #6e131a;
     padding: 20px;
     border-bottom: 1px solid var(--border-color);
     text-align: center;
@@ -83,7 +83,7 @@ body {
 .header-content h1 {
     font-size: 1.8rem;
     margin-bottom: 8px;
-    background: linear-gradient(135deg, var(--accent-color), var(--accent-light));
+    background: #f6cb0e;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -588,6 +588,21 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
     background: var(--accent-color);
+}
+
+/* ============= FOOTER ============= */
+.footer {
+    background-color: #6e131a;
+    color: #f6cb0e;
+    text-align: center;
+    padding: 12px 20px;
+    font-size: 0.85rem;
+    border-top: 1px solid #404040;
+    width: 100%;
+}
+
+.footer p {
+    margin: 0;
 }
 
 /* ============= RESPONSIVE ============= */
