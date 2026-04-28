@@ -1,6 +1,6 @@
 # ALN Social Media Script Generator
 
-A powerful content generation tool that automatically creates social media scripts for newsletters, LinkedIn posts, Twitter threads, and TikTok videos using Google's Gemini AI API.
+A powerful content generation tool that automatically creates social media scripts for newsletters, LinkedIn posts, Meta, and TikTok videos using Groq AI Wrapper.
 
 ## Features
 
