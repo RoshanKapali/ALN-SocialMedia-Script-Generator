@@ -17,14 +17,14 @@ A powerful content generation tool that automatically creates social media scrip
 
 ### Backend
 - **FastAPI** - Modern Python web framework
-- **Google Generative AI (Gemini 2.0 Flash)** - AI-powered content generation
+- **Groq API (Llama 3.3 70B Versatile)** - High-performance AI-powered content generation
 - **BeautifulSoup4** - Web scraping
 - **PDFPlumber** - PDF text extraction
 - **SQLite** - Local history database
 
 ### Frontend
 - **HTML5** - Semantic markup
-- **CSS3** - Modern styling
+- **CSS3** - Modern styling with dark theme
 - **Vanilla JavaScript** - No external dependencies
 
 ## Project Structure
@@ -52,7 +52,7 @@ ALN-SocialMedia-Script-Generator/
 ### Prerequisites
 - Python 3.10+
 - pip or conda
-- Gemini API key from [aistudio.google.com](https://aistudio.google.com)
+- Groq API key from [console.groq.com](https://console.groq.com)
 
 ### Setup
 
@@ -77,10 +77,10 @@ ALN-SocialMedia-Script-Generator/
 
 4. **Set up environment variables**
    ```bash
-   echo "GEMINI_API_KEY=your_api_key_here" > .env
+   echo "GROQ_API_KEY=your_api_key_here" > .env
    ```
-   - Get your API key from [aistudio.google.com](https://aistudio.google.com)
-   - Replace `your_api_key_here` with your actual Gemini API key
+   - Get your API key from [console.groq.com](https://console.groq.com)
+   - Replace `your_api_key_here` with your actual Groq API key
 
 ## Running the Application
 
