@@ -6,7 +6,7 @@ A powerful content generation tool that automatically creates social media scrip
 
 - 📰 **Newsletter Generation** - Create comprehensive newsletter content from articles
 - 💼 **LinkedIn Posts** - Generate professional LinkedIn posts from article text
-- 🐦 **Twitter/X Threads** - Create engaging Twitter/X thread content
+- 🐦 **Meta** - Create engaging facebook and Instagram content
 - 🎬 **TikTok Scripts** - Generate TikTok video scripts (informative, event, hiring, culture, fun)
 - 🌐 **URL Scraping** - Automatically extract and process content from web URLs
 - 📊 **Brand Tone Checking** - Validate generated content against brand guidelines
